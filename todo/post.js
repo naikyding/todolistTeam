@@ -10,6 +10,7 @@ const {
 const postItem = async (req, res) => {
   try {
     const { content } = await requestBodyBufferHandle(req)
+    if (!content) throw false
 
     DB.push({
       id: uuid(),

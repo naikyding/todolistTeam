@@ -9,6 +9,7 @@ const requestBodyBufferHandle = async (req) => {
   for await (const buffer of req) {
     buffers.push(buffer)
   }
+
   return JSON.parse(Buffer.concat(buffers).toString())
 }
 

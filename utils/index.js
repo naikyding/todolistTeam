@@ -1,3 +1,9 @@
+const filterReqId = (req) => {
+  const { url } = req
+  const urlAry = [...url.split('/')]
+  return urlAry.pop()
+}
+
 /**
  * 請求 body 處理
  * @date 2022-03-30
@@ -14,5 +20,6 @@ const requestBodyBufferHandle = async (req) => {
 }
 
 module.exports = {
+  filterReqId,
   requestBodyBufferHandle
 }

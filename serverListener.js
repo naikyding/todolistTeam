@@ -3,6 +3,7 @@ const {
   options,
   notFound,
 } = require('./todo/get')
+const { editItem } = require('./todo/patch')
 
 const serverListener = (req, res) => {
   if (req.url == "/todos" && req.method == "GET") getList(res)
@@ -12,9 +13,7 @@ const serverListener = (req, res) => {
     // deleteTodo.js
   } else if (req.url.startsWith("/todos/") && req.method == "DELETE") {
     // deleteTodo.js
-  } else if (req.url.startsWith("/todos/") && req.method == "PATCH") {
-    // patchTodo.js
-  }
+  } else if (req.url.startsWith("/todos/") && req.method == "PATCH") editItem(req, res)
   else if (req.method == "OPTIONS") options(res)
   else notFound(res)
 

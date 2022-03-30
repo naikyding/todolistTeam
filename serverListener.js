@@ -4,6 +4,7 @@ const {
   options,
   notFound,
 } = require('./todo/get')
+const { editItem } = require('./todo/patch')
 
 const { postItem } = require('./todo/post')
 
@@ -12,9 +13,7 @@ const serverListener = (req, res) => {
   else if (req.url == "/todos" && req.method == "POST") postItem(req, res)
   else if (req.url == "/todos" && req.method == "DELETE") deleteList(res)
   else if (req.url.startsWith("/todos/") && req.method == "DELETE") deleteItem(req, res)
-  else if (req.url.startsWith("/todos/") && req.method == "PATCH") {
-    // patchTodo.js
-  }
+  else if (req.url.startsWith("/todos/") && req.method == "PATCH") editItem(req, res)
   else if (req.method == "OPTIONS") options(res)
   else notFound(res)
 

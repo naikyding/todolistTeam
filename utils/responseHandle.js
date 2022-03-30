@@ -1,4 +1,4 @@
-const { headers } = require('./config')
+const { headers } = require('../config')
 
 /**
  * ((成功)) 響應功能

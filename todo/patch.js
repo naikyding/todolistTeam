@@ -1,24 +1,18 @@
-const DB = require('../db')
 const { filterReqId, requestBodyBufferHandle } = require('../utils')
 const { errorHandle, successHandle } = require('../utils/responseHandle')
+const Todo = require('../model/todo')
+const { getTodos } = require('./get')
 
 const editItem = async (req, res) => {
-  const id = filterReqId(req)
-  const DBeditItem = DB.find(item => item.id === id)
-  if (!DBeditItem) return errorHandle({
-    res,
-    message: '修改失敗，資料有誤或 id 不存在'
-  })
-
   try {
+    const id = filterReqId(req)
     const { content } = await requestBodyBufferHandle(req)
-    if (!content) throw false
-
-    DBeditItem.content = content
+    await Todo.findByIdAndUpdate(id, { content })
+    const list = await getTodos()
     successHandle({
       res,
       message: '修改成功',
-      data: DB
+      data: list
     })
   } catch {
     errorHandle({

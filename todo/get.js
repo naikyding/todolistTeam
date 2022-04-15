@@ -1,5 +1,18 @@
 const { successHandle, errorHandle } = require('../utils/responseHandle')
-const DB = require('../db')
+const Todo = require('../model/todo')
+
+const getTodos = async() => {
+  try {
+    const todoList = await Todo.find()
+    return todoList
+  } catch {
+    errorHandle({
+      res,
+      message: '無法取得列表'
+    })
+  }
+}
+
 
 /**
  * 取得列表
@@ -7,11 +20,14 @@ const DB = require('../db')
  * @param {object} res 響應物件
  * @returns {object} 響應內容
  */
-const getList = (res) => successHandle({
-  res,
-  message: '成功取得列表',
-  data: DB
-})
+const getList = async(res) => {
+  const list = await getTodos()
+  successHandle({
+    res,
+    message: '成功取得列表',
+    data: list
+  })
+}
 
 /**
  * CORS preflight
@@ -37,4 +53,5 @@ module.exports = {
   options,
   notFound,
   getList,
+  getTodos
 }

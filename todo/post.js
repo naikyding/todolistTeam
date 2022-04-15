@@ -1,6 +1,6 @@
 const { requestBodyBufferHandle } = require('../utils')
-const { v4: uuid } = require('uuid')
-const DB = require('../db')
+const Todo = require('../model/todo')
+const { getTodos } = require('./get')
 
 const {
   successHandle,
@@ -10,22 +10,21 @@ const {
 const postItem = async (req, res) => {
   try {
     const { content } = await requestBodyBufferHandle(req)
-    if (!content) throw false
 
-    DB.push({
-      id: uuid(),
+    await Todo.create({
       content
     })
+    const list = await getTodos()
     successHandle({
       res,
       statusCode: 201,
       message: '新增成功',
-      data: DB
+      data: list
     })
   } catch {
     errorHandle({
       res,
-      message: '資料格式錯誤!'
+      message: '操作錯誤!'
     })
   }
 }
